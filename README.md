@@ -14,7 +14,6 @@ It runs as a set of [Claude Code](https://claude.com/claude-code) skills, so sav
 
 <p>
   <img src="docs/icons/instagram.svg" alt="Instagram" height="40" title="Instagram">&nbsp;&nbsp;&nbsp;
-  <img src="docs/icons/reels.svg" alt="Instagram Reels" height="40" title="Instagram Reels">&nbsp;&nbsp;&nbsp;
   <img src="docs/icons/tiktok.svg" alt="TikTok" height="40" title="TikTok">&nbsp;&nbsp;&nbsp;
   <img src="docs/icons/youtube.svg" alt="YouTube" height="40" title="YouTube">
 </p>
@@ -41,22 +40,49 @@ Each note carries structured frontmatter (source, author, platform, duration, to
 
 ## How it works
 
+You capture a video **three ways** — all of them chain the rest automatically:
+1. **Send the link to a Telegram bot** — it recognizes the link and queues it.
+2. **`/save-reel <link>` in Claude Code** — runs the pipeline directly.
+3. **Tap Instagram's native Save button** — a poller picks up newly saved reels on its own.
+
 ```mermaid
-flowchart LR
-    A[Saved video URL<br/>Reel / TikTok / YouTube] --> B{save-reel}
-    B --> C[Download<br/>yt-dlp / gallery-dl]
-    C --> D[Extract audio<br/>ffmpeg]
-    D --> E{Subtitles available?}
-    E -- yes --> G[Use captions]
-    E -- no --> F[Transcribe<br/>Groq Whisper]
-    G --> H[Distill<br/>LLM map-reduce]
-    F --> H
-    C -- image-only post --> V[Vision pass<br/>read on-screen text]
-    V --> H
-    H --> I[Markdown note<br/>frontmatter + topics + takeaways + transcript]
-    I --> J[Theme classification<br/>+ account hubs]
-    J --> K[(Obsidian vault<br/>color-coded graph)]
-    K --> L[Recall hook<br/>resurfaces takeaways while you work]
+flowchart TB
+    %% capture (3 ways)
+    T["Send a link to<br/>the Telegram bot"]:::cap
+    C["/save-reel + link<br/>in Claude Code"]:::cap
+    S["Instagram Save button<br/>(native bookmark)"]:::cap
+    %% infra
+    Q[("Queue<br/>Upstash Redis")]:::infra
+    P["Saved-collection poller"]:::infra
+    D["PC drains the queue"]:::infra
+    %% pipeline
+    DL["Download<br/>yt-dlp / gallery-dl"]:::proc
+    AU["Extract audio<br/>ffmpeg"]:::proc
+    SUB{"Subtitles?"}:::proc
+    CAPT["Use captions"]:::proc
+    WH["Transcribe<br/>Groq Whisper"]:::proc
+    VI["Vision pass<br/>read on-screen text"]:::proc
+    DI["Distill<br/>LLM map-reduce"]:::proc
+    NOTE["Markdown note<br/>frontmatter + topics + takeaways + transcript"]:::proc
+    TH["Theme classification<br/>+ account hubs"]:::proc
+    %% output
+    V[("Obsidian vault<br/>color-coded graph")]:::out
+    RC["Recall hook resurfaces<br/>takeaways while you work"]:::out
+
+    T --> Q --> D
+    S --> P --> D
+    C --> DL
+    D --> DL
+    DL --> AU --> SUB
+    SUB -- yes --> CAPT --> DI
+    SUB -- no --> WH --> DI
+    DL -. image post .-> VI --> DI
+    DI --> NOTE --> TH --> V --> RC
+
+    classDef cap fill:#E4405F,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef infra fill:#2563EB,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef proc fill:#059669,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef out fill:#7C3AED,stroke:#ffffff,stroke-width:2px,color:#ffffff
 ```
 
 1. **Capture** — send a link (locally via `/save-reel <url>`, or always-on via a Telegram bot that enqueues links to a queue your PC drains).
