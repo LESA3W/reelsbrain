@@ -10,13 +10,32 @@ It runs as a set of [Claude Code](https://claude.com/claude-code) skills, so sav
 
 ---
 
+## Supported platforms
+
+<p>
+  <img src="docs/icons/instagram.svg" alt="Instagram" height="40" title="Instagram">&nbsp;&nbsp;&nbsp;
+  <img src="docs/icons/reels.svg" alt="Instagram Reels" height="40" title="Instagram Reels">&nbsp;&nbsp;&nbsp;
+  <img src="docs/icons/tiktok.svg" alt="TikTok" height="40" title="TikTok">&nbsp;&nbsp;&nbsp;
+  <img src="docs/icons/youtube.svg" alt="YouTube" height="40" title="YouTube">
+</p>
+
+Instagram Reels & image posts, TikTok videos & photo carousels, and YouTube videos & Shorts.
+
 ## Demo
 
-| Knowledge graph, colored by theme | A generated note | The pipeline running |
-|---|---|---|
-| ![Obsidian graph colored by theme](docs/graph.png) | ![Example distilled note](docs/note-example.png) | ![Pipeline run in the terminal](docs/pipeline-run.png) |
+### Knowledge graph, colored by theme
 
-*(The graph is zoomed out so individual note titles do not render — only the themed clusters are visible.)*
+Every saved video becomes a note, clustered by account and colored by theme.
+
+![Obsidian knowledge graph colored by theme](docs/graph.png)
+
+### What a note looks like
+
+Each note carries structured frontmatter (source, author, platform, duration, topics, tags) plus a distilled takeaway and the full transcript.
+
+![Note properties, topics and tags](docs/note-properties.png)
+
+![Note takeaway and transcript](docs/note-body.png)
 
 ---
 
