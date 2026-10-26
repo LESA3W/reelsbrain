@@ -1,0 +1,29 @@
+# Secrets / credentials — never commit
+.env
+.env.local
+*.env
+.cookies/
+*.cookies.txt
+*cookies*.txt
+
+# Personal data / generated artifacts
+import-list.txt
+.cache/
+vault/
+/vault/
+ReelsBrain.html
+_index.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Tooling / editor
+.impeccable/
+.obsidian/
+.DS_Store
+Thumbs.db
+node_modules/
