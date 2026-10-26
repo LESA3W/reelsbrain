@@ -13,9 +13,9 @@ It runs as a set of [Claude Code](https://claude.com/claude-code) skills, so sav
 ## Supported platforms
 
 <p>
-  <img src="docs/icons/instagram.svg" alt="Instagram" height="40" title="Instagram">&nbsp;&nbsp;&nbsp;
-  <img src="docs/icons/tiktok.svg" alt="TikTok" height="40" title="TikTok">&nbsp;&nbsp;&nbsp;
-  <img src="docs/icons/youtube.svg" alt="YouTube" height="40" title="YouTube">
+  <img src="docs/icons/instagram.svg" alt="Instagram" width="40" height="40" title="Instagram">&nbsp;&nbsp;&nbsp;
+  <img src="docs/icons/tiktok.svg" alt="TikTok" width="40" height="40" title="TikTok">&nbsp;&nbsp;&nbsp;
+  <img src="docs/icons/youtube.svg" alt="YouTube" width="40" height="40" title="YouTube">
 </p>
 
 Instagram Reels & image posts, TikTok videos & photo carousels, and YouTube videos & Shorts.
